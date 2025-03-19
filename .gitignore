@@ -1,0 +1,18 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# IntelliJ
+.idea/
+*.iml
+# Maven
+target/
+# Gradle
+build/
+.gradle/
+# Logs e arquivos temporários
+*.log
+*.class
+*.jar
+*.war
+*.ear
