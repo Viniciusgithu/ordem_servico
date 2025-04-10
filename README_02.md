@@ -1,2 +1,2 @@
 ## Segunda Entrega
-![Uploading Imagem do WhatsApp de 2025-04-09 à(s) 21.27.10_3e15a84f.jpg…]()
+![image](https://github.com/user-attachments/assets/52927228-706f-4ec7-b1d1-23d4089fed6b)
