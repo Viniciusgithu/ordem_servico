@@ -6,6 +6,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.print.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TextEditor extends JFrame implements ActionListener {
 
@@ -14,7 +16,7 @@ public class TextEditor extends JFrame implements ActionListener {
     BufferedImage[] imagensLinhas = new BufferedImage[5];
     String[] refs = new String[5];
     String[] pastas = new String[5];
-    JButton[] imageButtons = new JButton[5];
+    private final JLabel[] imageLabels = new JLabel[5];
 
 
     JMenuBar menuBar;
@@ -138,9 +140,6 @@ public class TextEditor extends JFrame implements ActionListener {
         JPanel leftPanel = new JPanel(new BorderLayout());
         leftPanel.add(imagePreviewPanel, BorderLayout.CENTER);
 
-        JPanel rightPanel = new JPanel(new GridLayout(5, 1, 5, 5));
-        JLabel[] imageLabels = new JLabel[5];
-
         for (int i = 0; i < 5; i++) {
             final int index = i;
             JPanel panel = new JPanel(new BorderLayout());
@@ -172,7 +171,6 @@ public class TextEditor extends JFrame implements ActionListener {
                             if (cropX < 0) cropX = 0;
                             original = original.getSubimage(cropX, 0, original.getHeight(), original.getHeight());
                             targetWidth = 50;
-                            targetHeight = 65;
                         }
 
                         Image scaled = original.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
@@ -183,7 +181,7 @@ public class TextEditor extends JFrame implements ActionListener {
                         JOptionPane.showMessageDialog(this, "Imagem " + (index + 1) + " carregada com sucesso!");
 
                     } catch (IOException ex) {
-                        ex.printStackTrace();
+                        Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
                         JOptionPane.showMessageDialog(this, "Erro ao carregar imagem.");
                     }
                 }
@@ -214,40 +212,6 @@ public class TextEditor extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
         this.setVisible(true);
     }
-    private void selectAndLoadImage(int i) {
-    	  JFileChooser fileChooser = new JFileChooser();
-    	  fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
-    	  int result = fileChooser.showOpenDialog(null);
-    	  if (result == JFileChooser.APPROVE_OPTION) {
-    	   File selectedFile = fileChooser.getSelectedFile();
-    	   String path = selectedFile.getAbsolutePath();
-    	   ImageIcon cropped = loadAndCropImage(path, 100, 80);
-    	   imageLabels[i].setIcon(cropped);
-    	  }
-    	 }
-
-    	 private ImageIcon loadAndCropImage(String path, int targetHeight, int maxWidth) {
-    	  try {
-    	   BufferedImage original = ImageIO.read(new File(path));
-    	   int newWidth = (int) ((double) original.getWidth() / original.getHeight() * targetHeight);
-    	   Image scaledImage = original.getScaledInstance(newWidth, targetHeight, Image.SCALE_SMOOTH);
-
-    	   BufferedImage resized = new BufferedImage(newWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
-    	   Graphics2D g2d = resized.createGraphics();
-    	   g2d.drawImage(scaledImage, 0, 0, null);
-    	   g2d.dispose();
-
-    	   if (newWidth > maxWidth) {
-    	    int x = (newWidth - maxWidth) / 2;
-    	    resized = resized.getSubimage(x, 0, maxWidth, targetHeight);
-    	   }
-
-    	   return new ImageIcon(resized);
-    	  } catch (IOException e) {
-    	   e.printStackTrace();
-    	   return null;
-    	  }
-    	 }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -297,7 +261,6 @@ public class TextEditor extends JFrame implements ActionListener {
                         int maxW = 45;
 
                         double aspect = (double) img.getWidth() / img.getHeight();
-                        int scaledW = (int) (targetH * aspect);
 
                         BufferedImage croppedImg = img;
 
@@ -312,9 +275,7 @@ public class TextEditor extends JFrame implements ActionListener {
 
                         // Centraliza verticalmente no bloco (opcional)
                         int imgX = 45;
-                        int imgY = currentY;
-
-                        g2d.drawImage(scaledImage, imgX, imgY, maxW, targetH, null);
+                        g2d.drawImage(scaledImage, imgX, currentY, maxW, targetH, null);
                     }
 
 
@@ -337,7 +298,7 @@ public class TextEditor extends JFrame implements ActionListener {
                 try {
                     job.print();
                 } catch (PrinterException ex) {
-                    ex.printStackTrace();
+                    Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
