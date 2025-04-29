@@ -6,20 +6,32 @@ import javax.imageio.ImageIO;
 
 public class ImageUtils {
 
-    public static BufferedImage loadAndCropImage(String path, int targetHeight, int maxWidth) throws IOException {
-        BufferedImage original = ImageIO.read(new File(path));
-        int newWidth = (int) ((double) original.getWidth() / original.getHeight() * targetHeight);
-        Image scaledImage = original.getScaledInstance(newWidth, targetHeight, Image.SCALE_SMOOTH);
+    public static BufferedImage cropAndScale(BufferedImage original, int targetH, int maxW) {
+        // copia e adapta o código de leitura
+        int w = original.getWidth(), h = original.getHeight();
 
-        BufferedImage resized = new BufferedImage(newWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+        //crop central se for muito largo
+        BufferedImage cropped = original;
+        if (w > h) {
+            int cropX = (w - h) / 2;
+            cropped = original.getSubimage(cropX, 0, h, h);
+        }
+
+        //escala proporcional e limita largura
+        int newW = (int)((double)cropped.getWidth()/cropped.getHeight()*targetH);
+        if (newW > maxW) newW = maxW;
+
+        Image tmp = cropped.getScaledInstance(newW, targetH, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(newW, targetH, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(scaledImage, 0, 0, null);
+        g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
 
-        if (newWidth > maxWidth) {
-            int x = (newWidth - maxWidth) / 2;
-            resized = resized.getSubimage(x, 0, maxWidth, targetHeight);
-        }
         return resized;
+    }
+
+    public static BufferedImage loadAndCropImage(String path, int targetHeight, int maxWidth) throws IOException {
+        BufferedImage original = ImageIO.read(new File(path));
+        return cropAndScale(original, targetHeight, maxWidth);
     }
 }
