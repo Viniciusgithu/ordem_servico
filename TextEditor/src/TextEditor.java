@@ -214,17 +214,17 @@ public class TextEditor extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
         this.setVisible(true);
     }
-    private void selectAndLoadImage(int i) {
-    	  JFileChooser fileChooser = new JFileChooser();
-    	  fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
-    	  int result = fileChooser.showOpenDialog(null);
-    	  if (result == JFileChooser.APPROVE_OPTION) {
-    	   File selectedFile = fileChooser.getSelectedFile();
-    	   String path = selectedFile.getAbsolutePath();
-    	   ImageIcon cropped = loadAndCropImage(path, 100, 80);
-    	   imageLabels[i].setIcon(cropped);
-    	  }
-    	 }
+    // private void selectAndLoadImage(int i) {
+    // 	  JFileChooser fileChooser = new JFileChooser();
+    // 	  fileChooser.setFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
+    // 	  int result = fileChooser.showOpenDialog(null);
+    // 	  if (result == JFileChooser.APPROVE_OPTION) {
+    // 	   File selectedFile = fileChooser.getSelectedFile();
+    // 	   String path = selectedFile.getAbsolutePath();
+    // 	   ImageIcon cropped = loadAndCropImage(path, 100, 80);
+    // 	   imageLabels[i].setIcon(cropped);
+    // 	  }
+    // 	 }
 
     	 private ImageIcon loadAndCropImage(String path, int targetHeight, int maxWidth) {
     	  try {
