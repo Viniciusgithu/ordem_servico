@@ -12,9 +12,6 @@
 *(Lo-fi Ordem de Serviço)*
 <br><br><br><br><br>
 
-### ⏺️ Screencast
-
-[Screencast dos Testes Disponível](https://youtu.be/XaAEmypOHGs)
 
 ### Documentação
 [Docs](https://docs.google.com/document/d/1--pajenH8dxMHjr5ZePC4P_uTH0MYi9Eg31gYzd8Zl8/edit?tab=t.0)
@@ -50,6 +47,7 @@ https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=
 
 ###  Screencast dos testes unitários
 
+https://youtu.be/XaAEmypOHGs
 
 
 
