@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.print.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -136,9 +135,6 @@ public class TextEditor extends JFrame implements ActionListener {
         // Painel de botões de imagem
         JPanel imagePreviewPanel = new JPanel(new GridLayout(5, 1, 5, 5));
         imagePreviewPanel.setBorder(BorderFactory.createTitledBorder("Imagens das Linhas"));
-        
-        JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.add(imagePreviewPanel, BorderLayout.CENTER);
 
         for (int i = 0; i < 5; i++) {
             final int index = i;
@@ -156,33 +152,20 @@ public class TextEditor extends JFrame implements ActionListener {
                 if (option == JFileChooser.APPROVE_OPTION) {
                     try {
                         File file = fileChooser.getSelectedFile();
-                        BufferedImage original = ImageIO.read(file);
-                        imagensLinhas[index] = original;
-                        refs[index] = file.getName();
-                        pastas[index] = file.getAbsolutePath();
+                        BufferedImage img = ImageUtils.loadAndCropImage(file.getAbsolutePath(), 65, 50);
 
-                        // Redimensiona mantendo proporção e cortando excesso horizontal
-                        int targetHeight = 65;
-                        double aspect = (double) original.getWidth() / original.getHeight();
-                        int targetWidth = (int) (targetHeight * aspect);
-
-                        if (targetWidth > 50) {
-                            int cropX = (original.getWidth() - original.getHeight()) / 2;
-                            if (cropX < 0) cropX = 0;
-                            original = original.getSubimage(cropX, 0, original.getHeight(), original.getHeight());
-                            targetWidth = 50;
-                        }
-
-                        Image scaled = original.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
-                        imageLabels[index].setIcon(new ImageIcon(scaled));
+                        imageLabels[index].setIcon(new ImageIcon(img));
                         imageLabels[index].setText(""); // tira o texto
 
                         btn.setVisible(false);
                         JOptionPane.showMessageDialog(this, "Imagem " + (index + 1) + " carregada com sucesso!");
 
                     } catch (IOException ex) {
-                        Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
-                        JOptionPane.showMessageDialog(this, "Erro ao carregar imagem.");
+                        Logger.getLogger(TextEditor.class.getName())
+                                .log(Level.SEVERE, "falha ao carregar imagem", ex);
+                        JOptionPane.showMessageDialog(this,
+                                "Erro ao carregar imagem:\n" + ex.getMessage(),
+                                "Erro", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
@@ -220,78 +203,25 @@ public class TextEditor extends JFrame implements ActionListener {
         }
         if (e.getSource() == printItem) {
             PrinterJob job = PrinterJob.getPrinterJob();
-            job.setPrintable((graphics, pageFormat, pageIndex) -> {
-                if (pageIndex > 0) return Printable.NO_SUCH_PAGE;
-
-                Graphics2D g2d = (Graphics2D) graphics;
-                g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-
-                g2d.setFont(new Font("Monospaced", Font.PLAIN, 12));
-                int y = 20;
-                g2d.drawString("ORDEM DE SERVIÇO", 250, y);
-                y += 20;
-                g2d.drawString("Cliente: " + clienteField.getText(), 50, y);
-                g2d.drawString("Larg.Tec: " + larguraTecidoField.getText(), 350, y);
-                y += 15;
-                g2d.drawString("Papel: " + papelField.getText(), 50, y);
-                g2d.drawString("Larg. Impressão: " + larguraImpressaoField.getText(), 350, y);
-                y += 15;
-                g2d.drawString("Tecido: " + tecidoField.getText(), 50, y);
-                y += 15;
-                g2d.drawString("Data: " + dataField.getText(), 50, y);
-                g2d.drawString("Hora: " + horaField.getText(), 200, y);
-
-                y += 20;
-                g2d.drawString("Tec Cliente: " + (checkTecCliente.isSelected() ? "✔️" : "❌"), 50, y);
-                g2d.drawString("Só Impressão: " + (checkSoImpressao.isSelected() ? "✔️" : "❌"), 200, y);
-                y += 15;
-                g2d.drawString("Tec Sublimatec: " + (checkTecSublimatec.isSelected() ? "✔️" : "❌"), 50, y);
-                g2d.drawString("Calandra: " + (checkCalandra.isSelected() ? "✔️" : "❌"), 200, y);
-
-                int startY = y + 30;
-                int spacingY = 75;
-
-                for (int i = 0; i < 5; i++) {
-                    int currentY = startY + (i * spacingY);
-
-                    // Desenhar imagem
-                    BufferedImage img = imagensLinhas[i];
-                    if (img != null) {
-                        int targetH = 65;
-                        int maxW = 45;
-
-                        double aspect = (double) img.getWidth() / img.getHeight();
-
-                        BufferedImage croppedImg = img;
-
-                        // Se imagem for mais larga que alta, crop central horizontal
-                        if (img.getWidth() > img.getHeight()) {
-                            int cropX = (img.getWidth() - img.getHeight()) / 2;
-                            croppedImg = img.getSubimage(cropX, 0, img.getHeight(), img.getHeight());
-                        }
-
-                        // Redimensiona para altura de 65
-                        Image scaledImage = croppedImg.getScaledInstance(maxW, targetH, Image.SCALE_SMOOTH);
-
-                        // Centraliza verticalmente no bloco (opcional)
-                        int imgX = 45;
-                        g2d.drawImage(scaledImage, imgX, currentY, maxW, targetH, null);
-                    }
-
-
-                    int blockX = 100;
-                    g2d.drawRect(blockX, currentY, 500, 65);
-                    String refText = refs[i] != null ? refs[i] : "__________";
-                    String pastaText = pastas[i] != null ? pastas[i] : "__________";
-                    g2d.drawString("REF: " + refText + "   MTS: _________   PASTA: " + pastaText, blockX + 10, currentY + 15);
-
-                    g2d.drawString("Ploteiro: ___________  Data:__/__/__  Máquina: ______", blockX + 10, currentY + 30);
-                    g2d.drawString("Op. Calandra: _________  Data:__/__/__", blockX + 10, currentY + 45);
-                    g2d.drawString("Conferente: ___________  Data:__/__/__  Revisão: ___", blockX + 10, currentY + 60);
-                }
-
-                return Printable.PAGE_EXISTS;
-            });
+            boolean[] checks = {
+                    checkTecCliente.isSelected(),
+                    checkSoImpressao.isSelected(),
+                    checkTecSublimatec.isSelected(),
+                    checkCalandra.isSelected()
+            };
+            job.setPrintable(PrintUtils.createPrintable(
+                    clienteField.getText(),
+                    larguraTecidoField.getText(),
+                    papelField.getText(),
+                    larguraImpressaoField.getText(),
+                    tecidoField.getText(),
+                    dataField.getText(),
+                    horaField.getText(),
+                    checks,
+                    imagensLinhas,
+                    refs,
+                    pastas
+            ));
 
             boolean doPrint = job.printDialog();
             if (doPrint) {
