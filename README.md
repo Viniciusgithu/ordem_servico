@@ -14,7 +14,7 @@
 
 ### ⏺️ Screencast
 
-[Screencast dos Testes Disponível]([https://youtu.be/HueqqPeg3l0](https://youtu.be/XaAEmypOHGs))
+[Screencast dos Testes Disponível](https://youtu.be/XaAEmypOHGs)
 
 ### Documentação
 [Docs](https://docs.google.com/document/d/1--pajenH8dxMHjr5ZePC4P_uTH0MYi9Eg31gYzd8Zl8/edit?tab=t.0)
