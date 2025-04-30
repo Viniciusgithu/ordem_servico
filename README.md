@@ -44,6 +44,10 @@ https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=
 
 ###  Diagrama de Classes
 
+https://app.diagrams.net/#G1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D
+
+![Captura de tela 2025-04-30 163921](https://github.com/user-attachments/assets/a63b70c7-c74f-422f-b01a-02fdda026476)
+
 
 ###  Screencast dos testes unitários
 
