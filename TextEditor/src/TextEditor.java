@@ -153,11 +153,13 @@ public class TextEditor extends JFrame implements ActionListener {
                     try {
                         File file = fileChooser.getSelectedFile();
                         BufferedImage img = ImageUtils.loadAndCropImage(file.getAbsolutePath(), 65, 50);
+                        
+                        imagensLinhas[index] = img;
 
                         imageLabels[index].setIcon(new ImageIcon(img));
                         imageLabels[index].setText(""); // tira o texto
 
-                        btn.setVisible(false);
+                        //btn.setVisible(false);
                         JOptionPane.showMessageDialog(this, "Imagem " + (index + 1) + " carregada com sucesso!");
 
                     } catch (IOException ex) {
