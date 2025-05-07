@@ -13,8 +13,6 @@
 <br><br><br><br><br>
 
 
-### Documentação
-[Docs](https://docs.google.com/document/d/1--pajenH8dxMHjr5ZePC4P_uTH0MYi9Eg31gYzd8Zl8/edit?tab=t.0)
 
 
 ## Segunda Entrega
