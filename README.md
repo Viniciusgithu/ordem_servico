@@ -1,58 +1,60 @@
-# Projeto Programação Orientada a Objetos 
-## Primeira entrega
+# 📌 Projeto: Ordem de Serviço  
+*Disciplina: Programação Orientada a Objetos*
 
-### ⏺️ História do Usuário
+---
 
-➡️ [História do Usuário](https://docs.google.com/document/d/1hoB7Cg6qycSNQD4wTxnoZE7-cdvidArfGntpcaNiHuY/edit?usp=sharing)
-<br><br><br><br><br>
+## Primeira Entrega
 
-### ⏺️ Lo-Fi
+### 🧑‍💻 História do Usuário
+- [Clique para visualizar a história do usuário](https://docs.google.com/document/d/1hoB7Cg6qycSNQD4wTxnoZE7-cdvidArfGntpcaNiHuY/edit?usp=sharing)
 
+### 📝 Protótipo Lo-Fi
 ![Lo-Fi Prototype](Lo-fi_Ordem_Servico.jpg)  
-*(Lo-fi Ordem de Serviço)*
-<br><br><br><br><br>
+*Protótipo de baixa fidelidade da Ordem de Serviço*
 
-
-
+---
 
 ## Segunda Entrega
-https://app.diagrams.net/#G1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D
-![image](https://github.com/user-attachments/assets/494e5c92-9e0f-4bcc-83d2-d69b40f25a11)
 
+### 🔄 Diagrama de Fluxo da Aplicação
+- [Acessar no diagrams.net](https://app.diagrams.net/#G1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D)
 
-### Screencast Legendado
+![Diagrama da Aplicação](https://github.com/user-attachments/assets/494e5c92-9e0f-4bcc-83d2-d69b40f25a11)
 
-https://drive.google.com/file/d/1Vj0vaCYVrJ8Omm20w1lRwZ2vBlH6-zoA/view?usp=drive_link
+### 🎥 Screencast Legendado
+- [Assistir ao vídeo com legenda](https://drive.google.com/file/d/1Vj0vaCYVrJ8Omm20w1lRwZ2vBlH6-zoA/view?usp=drive_link)
 
-<br><br><br><br><br>
+---
 
 ## Terceira Entrega
 
+### 🧾 Histórias do Usuário (Atualizadas)
+- [Visualizar documento](https://docs.google.com/document/d/1hoB7Cg6qycSNQD4wTxnoZE7-cdvidArfGntpcaNiHuY/edit?usp=sharing)
 
-###  Histórias do Usuário
+### 🎨 Protótipos de Telas (Figma)
+- [Acessar protótipos no Figma](https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=dwtfHLBP6ZuvZv5J-1)
 
-https://docs.google.com/document/d/1hoB7Cg6qycSNQD4wTxnoZE7-cdvidArfGntpcaNiHuY/edit?usp=sharing
+### 🧬 Diagrama de Classes
+- [Ver diagrama no diagrams.net](https://app.diagrams.net/#G1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D)
 
+![Diagrama de Classes](https://github.com/user-attachments/assets/a63b70c7-c74f-422f-b01a-02fdda026476)
 
+### 🧪 Screencast dos Testes Unitários
+- [Assistir aos testes unitários](https://youtu.be/XaAEmypOHGs)
 
-###  Protótipos de Telas (Figma)
+### 💻 Screencast da Aplicação Funcionando
+- [Demonstração da aplicação em funcionamento](https://youtu.be/EbfuM371guU)
 
-https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=dwtfHLBP6ZuvZv5J-1
+---
 
+## 💡 Melhorias Futuras (Sugestões)
+- API restful
+- Integração com banco de dados
+- Autenticação de usuários
+- Responsividade para mobile
+- Criação de relatórios exportáveis (PDF)
+- Interface mais interativa com feedback visual
 
-###  Diagrama de Classes
+---
 
-https://app.diagrams.net/#G1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D
-
-![Captura de tela 2025-04-30 163921](https://github.com/user-attachments/assets/a63b70c7-c74f-422f-b01a-02fdda026476)
-
-
-###  Screencast dos testes unitários
-
-https://youtu.be/XaAEmypOHGs
-
-###  Screencast da aplicação funcionando
-
-https://youtu.be/EbfuM371guU
-
-
+📍 *Projeto desenvolvido como parte da disciplina de Programação Orientada a Objetos – 2025.*
