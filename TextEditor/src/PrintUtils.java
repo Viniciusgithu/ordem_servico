@@ -31,26 +31,31 @@ public class PrintUtils {
 
             String[] labels = {"Tec Cliente", "Só Impressão", "Tec Sublimatec", "Calandra"};
             for (int i = 0; i < os.checks.length; i++) {
-                g2d.drawString(labels[i] + ": " + (os.checks[i] ? "✔️" : "❌"), 50 + (i % 2) * 150, y + (i / 2) * 15);
+                g2d.drawString(labels[i] + ": " + (os.checks[i] ? "✔️" : ""), 50 + (i % 2) * 150, y + (i / 2) * 15);
             }
 
             int startY = y + 30;
-            int spacingY = 75;
+            int spacingY = 110;
             for (int i = 0; i < os.imagens.length; i++) {
                 int currentY = startY + i * spacingY;
                 BufferedImage img = os.imagens[i];
                 if (img != null) {
                     Image scaled = img.getScaledInstance(65, 95, Image.SCALE_SMOOTH);
-                    g2d.drawImage(scaled, 0, currentY, 100, 65, null);
+                    g2d.drawImage(scaled, 0, currentY, 100, 110, null);
                 }
                 int blockX = 100;
-                g2d.drawRect(blockX, currentY, 500, 65);
+                int blockWidth = 500;
+                int blockHeight = 110;
+                g2d.drawRect(blockX, currentY, blockWidth, blockHeight);
+
                 String refText = os.refs[i] != null ? os.refs[i] : "__________";
                 String pastaText = os.pastas[i] != null ? os.pastas[i] : "__________";
-                g2d.drawString("REF: " + refText + "   MTS: _________   PASTA: " + pastaText, blockX + 10, currentY + 15);
-                g2d.drawString("Ploteiro: ___________  Data:__/__/__  Máquina: ______", blockX + 10, currentY + 30);
-                g2d.drawString("Op. Calandra: _________  Data:__/__/__", blockX + 10, currentY + 45);
-                g2d.drawString("Conferente: ___________  Data:__/__/__  Revisão: ___", blockX + 10, currentY + 60);
+
+                g2d.drawString("REF: " + refText + "    MTS: _________", blockX + 10, currentY + 20);
+                g2d.drawString("PASTA: " + pastaText, blockX + 10, currentY + 40);
+                g2d.drawString("Ploteiro: ___________  Data:__/__/__  Máquina: ______", blockX + 10, currentY + 60);
+                g2d.drawString("Op. Calandra: _________  Data:__/__/__", blockX + 10, currentY + 80);
+                g2d.drawString("Conferente: ___________  Data:__/__/__  Revisão: ___", blockX + 10, currentY + 100);
             }
 
             return Printable.PAGE_EXISTS;

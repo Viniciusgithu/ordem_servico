@@ -117,13 +117,47 @@ public class TextEditor extends JFrame implements ActionListener {
         checkTecSublimatec = new JCheckBox("Tec Sublimatec");
         checkSoImpressao = new JCheckBox("Só Impressão");
         checkCalandra = new JCheckBox("Calandra");
+
+        // Adiciona os listeners para impedir seleções conflitantes
+        checkTecCliente.addActionListener(e -> {
+            if (checkTecCliente.isSelected()) {
+                checkTecSublimatec.setSelected(false);
+            }
+        });
+        checkTecSublimatec.addActionListener(e -> {
+            if (checkTecSublimatec.isSelected()) {
+                checkTecCliente.setSelected(false);
+            }
+        });
+        checkSoImpressao.addActionListener(e -> {
+            if (checkSoImpressao.isSelected()) {
+                checkCalandra.setSelected(false);
+            }
+        });
+        checkCalandra.addActionListener(e -> {
+            if (checkCalandra.isSelected()) {
+                checkSoImpressao.setSelected(false);
+            }
+        });
+
         checkboxPanel.add(checkTecCliente);
         checkboxPanel.add(checkTecSublimatec);
         checkboxPanel.add(checkSoImpressao);
         checkboxPanel.add(checkCalandra);
         infoPanel.add(checkboxPanel, gbc);
 
+        configurarNavegacaoComEnter(clienteField, larguraTecidoField);
+        configurarNavegacaoComEnter(larguraTecidoField, papelField);
+        configurarNavegacaoComEnter(papelField, larguraImpressaoField);
+        configurarNavegacaoComEnter(larguraImpressaoField, tecidoField);
+        configurarNavegacaoComEnter(tecidoField, dataField);
+        configurarNavegacaoComEnter(dataField, horaField);
+
         return infoPanel;
+    }
+
+    private void configurarNavegacaoComEnter(JTextField atual, JTextField proximo) {
+        atual.addActionListener(e -> proximo.requestFocus());
     }
 
     private void adicionarNovaPagina() {
