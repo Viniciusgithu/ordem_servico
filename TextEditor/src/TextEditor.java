@@ -151,17 +151,27 @@ public class TextEditor extends JFrame implements ActionListener {
             List<OrdemServico> ordens = new ArrayList<>();
             for (LinhaPanel panel : paginas) {
                 OrdemServico ordem = new OrdemServico();
-                ordem.cliente = clienteField.getText();
-                ordem.data = dataField.getText();
-                ordem.hora = horaField.getText();
-                ordem.papel = papelField.getText();
-                ordem.tecido = tecidoField.getText();
-                ordem.larguraTecido = larguraTecidoField.getText();
-                ordem.larguraImpressao = larguraImpressaoField.getText();
-                ordem.checks = checks;
-                ordem.imagens = panel.getImagens();
-                ordem.refs = panel.getRefs();
-                ordem.pastas = panel.getPastas();
+                ordem.setCliente(clienteField.getText());
+                ordem.setData(dataField.getText());
+                ordem.setHora(horaField.getText());
+                ordem.setPapel(papelField.getText());
+                ordem.setTecido(tecidoField.getText());
+                ordem.setLarguraTecido(larguraTecidoField.getText());
+                ordem.setLarguraImpressao(larguraImpressaoField.getText());
+
+                // checkbox[] -> atributos separados
+                boolean[] checksArray = checks; // seu array boolean vindo da UI
+                if (checksArray.length >= 4) {
+                    ordem.setTecCliente(    checksArray[0] );
+                    ordem.setTecSublimatec( checksArray[1] );
+                    ordem.setSoImpressao(   checksArray[2] );
+                    ordem.setCalandra(      checksArray[3] );
+                }
+
+                ordem.setImagens(panel.getImagens());
+                ordem.setRefs(panel.getRefs());
+                ordem.setMts(panel.getMts());
+                ordem.setPastas(panel.getPastas());
                 ordens.add(ordem);
             }
 
