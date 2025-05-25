@@ -47,27 +47,6 @@
 
 ---
 
-## Quarta Entrega
-
-### 🧾 Histórias do Usuário (Atualizadas)
-- [Visualizar documento](https://docs.google.com/document/d/14WKR6c2ouM5nqEZj5yV3sOeDF--C2tIPXqlO117ok5g/edit?tab=t.0)
-
-### 🎨 Protótipos de Telas (Figma)
-- [Acessar protótipos no Figma](https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=dwtfHLBP6ZuvZv5J-1)
-
-### 🧬 Diagrama de Classes
-- [Ver diagrama no diagrams.net](https://app.diagrams.net/#G1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D)
-
-![Diagrama de Classes](https://github.com/user-attachments/assets/a63b70c7-c74f-422f-b01a-02fdda026476)
-
-### 🧪 Screencast dos Testes Unitários
-- [Assistir aos testes unitários](https://youtu.be/XaAEmypOHGs)
-
-### 💻 Screencast da Aplicação Funcionando
-- [Demonstração da aplicação em funcionamento](https://youtu.be/EbfuM371guU)
-
----
-
 ## 💡 Melhorias Futuras (Sugestões)
 - API restful
 - Integração com banco de dados
