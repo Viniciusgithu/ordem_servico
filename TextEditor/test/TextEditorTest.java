@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.lang.reflect.Field;
+import java.io.IOException;
 
 public class TextEditorTest {
 
@@ -13,60 +13,26 @@ public class TextEditorTest {
         TextEditor editor = new TextEditor();
 
         editor.clienteField.setText("Maria");
-        editor.equipamentoField.setText("Notebook");
-        editor.defeitoField.setText("Não liga");
-        editor.diagnosticoField.setText("Placa mãe queimada");
-        editor.servicoField.setText("Troca de placa");
-        editor.valorField.setText("750");
+        editor.larguraTecidoField.setText("1.50");
+        editor.papelField.setText("Sublimático");
+        editor.larguraImpressaoField.setText("1.60");
+        editor.tecidoField.setText("Poliéster");
+        editor.dataField.setText("28/05/2025");
+        editor.horaField.setText("14:00");
 
         assertEquals("Maria", editor.clienteField.getText());
-        assertEquals("Notebook", editor.equipamentoField.getText());
-        assertEquals("Não liga", editor.defeitoField.getText());
-        assertEquals("Placa mãe queimada", editor.diagnosticoField.getText());
-        assertEquals("Troca de placa", editor.servicoField.getText());
-        assertEquals("750", editor.valorField.getText());
+        assertEquals("1.50", editor.larguraTecidoField.getText());
+        assertEquals("Sublimático", editor.papelField.getText());
+        assertEquals("1.60", editor.larguraImpressaoField.getText());
+        assertEquals("Poliéster", editor.tecidoField.getText());
+        assertEquals("28/05/2025", editor.dataField.getText());
+        assertEquals("14:00", editor.horaField.getText());
     }
 
     @Test
-    void deveMontarPrintableCorretamente() {
+    void deveCarregarImagemValidaNoSlotZero() {
         TextEditor editor = new TextEditor();
-
-        editor.clienteField.setText("João");
-        editor.equipamentoField.setText("PC Gamer");
-        editor.defeitoField.setText("Não inicia");
-        editor.diagnosticoField.setText("Fonte queimada");
-        editor.servicoField.setText("Substituição da fonte");
-        editor.valorField.setText("500");
-
-        try {
-            Field printableField = TextEditor.class.getDeclaredField("printable");
-            printableField.setAccessible(true);
-
-            editor.printAction.doClick();
-
-            Object printable = printableField.get(editor);
-            assertNotNull(printable, "Printable deve ter sido criado");
-        } catch (Exception e) {
-            fail("Erro ao acessar campo printable: " + e.getMessage());
-        }
-    }
-
-    @Test
-    void deveLancarExcecaoAoInserirImagemInvalida() {
-        TextEditor editor = new TextEditor();
-
-        Exception exception = assertThrows(Exception.class, () -> {
-            editor.insertImage("caminho/inexistente.jpg");
-        });
-
-        assertTrue(exception.getMessage().contains("caminho") || exception instanceof java.io.IOException);
-    }
-
-    @Test
-    void deveCarregarImagemValida() {
-        TextEditor editor = new TextEditor();
-
-        String imagePath = "Lo-fi_Ordem_Servico.jpg"; // já presente no seu projeto
+        String imagePath = "Lo-fi_Ordem_Servico.jpg"; // nome exato da imagem no seu projeto
 
         File imageFile = new File(imagePath);
         if (!imageFile.exists()) {
@@ -74,16 +40,21 @@ public class TextEditorTest {
         }
 
         try {
-            editor.insertImage(imagePath);
+            BufferedImage img = ImageUtils.loadAndCropImage(imagePath, 65, 50);
+            editor.imagensLinhas[0] = img;
+            editor.imageLabels[0].setIcon(new ImageIcon(img));
 
-            Field imgField = TextEditor.class.getDeclaredField("img");
-            imgField.setAccessible(true);
-            BufferedImage img = (BufferedImage) imgField.get(editor);
-
-            assertNotNull(img, "Imagem deve estar carregada");
-            assertTrue(img.getWidth() > 0 && img.getHeight() > 0, "Imagem não deve estar vazia");
-        } catch (Exception e) {
+            assertNotNull(editor.imagensLinhas[0], "Imagem deve estar carregada no índice 0");
+            assertTrue(editor.imagensLinhas[0].getWidth() > 0 && editor.imagensLinhas[0].getHeight() > 0);
+        } catch (IOException e) {
             fail("Erro ao carregar imagem: " + e.getMessage());
         }
+    }
+
+    @Test
+    void deveLancarExcecaoAoCarregarImagemInexistente() {
+        assertThrows(IOException.class, () -> {
+            ImageUtils.loadAndCropImage("caminho/falso/nao_existe.jpg", 65, 50);
+        });
     }
 }
