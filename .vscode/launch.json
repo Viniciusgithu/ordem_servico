@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
+            "projectName": "ordem_servico_d047f399",
+            "vmArgs": "-cp bin;libs/sqlite-jdbc-3.43.0.0.jar"
+        },
+        {
+            "type": "java",
+            "name": "TestDao",
+            "request": "launch",
+            "mainClass": "TestDao",
+            "projectName": "ordem_servico_d047f399",
+            "vmArgs": "-cp bin;libs/sqlite-jdbc-3.43.0.0.jar"
+        },
+        {
+            "type": "java",
+            "name": "TextEditor",
+            "request": "launch",
+            "mainClass": "TextEditor",
+            "projectName": "ordem_servico_d047f399",
+            "vmArgs": "-cp bin;libs/sqlite-jdbc-3.43.0.0.jar"
+        }
+    ]
+}

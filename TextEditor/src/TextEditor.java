@@ -1,32 +1,32 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.print.*;
+import java.io.*;
+import java.sql.SQLException; // Não usado diretamente aqui, mas pode ser útil
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.*;
+import java.util.logging.*; // Import para SQLException
+import javax.swing.*;
 
 public class TextEditor extends JFrame implements ActionListener {
 
+    // Campos do cabeçalho da OS (comuns a uma OS)
     JTextField clienteField, dataField, horaField, papelField, tecidoField, larguraTecidoField, larguraImpressaoField;
     JCheckBox checkTecCliente, checkTecSublimatec, checkSoImpressao, checkCalandra;
 
-    JTabbedPane tabbedPane;
-    List<LinhaPanel> paginas = new ArrayList<>();
+    JTabbedPane tabbedPane; // Abas, onde cada aba é um LinhaPanel representando uma OS
+    // List<LinhaPanel> paginas = new ArrayList<>(); // Não precisamos mais de 'paginas' se cada aba é um LinhaPanel
 
-    JMenuItem printItem, exitItem, addPageItem;
+    JMenuItem printItem, saveItem, exitItem, addPageItem; // Adicionado saveItem
 
     public TextEditor() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Ordem de Serviço");
-        setSize(800, 1000);
+        setSize(850, 700); // Ajustar tamanho conforme necessidade
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Painel superior com campos de cabeçalho
+        // Painel superior com campos de cabeçalho (comuns a OS ativa)
         JPanel infoPanel = criarPainelCabecalho();
         add(infoPanel, BorderLayout.NORTH);
 
@@ -34,22 +34,26 @@ public class TextEditor extends JFrame implements ActionListener {
         tabbedPane = new JTabbedPane();
         add(tabbedPane, BorderLayout.CENTER);
 
-        // Primeira página
-        adicionarNovaPagina();
+        // Adicionar a primeira "Ordem de Serviço" (aba com LinhaPanel)
+        adicionarNovaAbaOS();
 
         // Menu
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Arquivo");
-        printItem = new JMenuItem("Imprimir");
+        addPageItem = new JMenuItem("Nova Ordem de Serviço (Aba)");
+        saveItem = new JMenuItem("Salvar Ordem Atual"); // Botão Salvar
+        printItem = new JMenuItem("Imprimir Ordem Atual");
         exitItem = new JMenuItem("Sair");
-        addPageItem = new JMenuItem("+ Página");
 
+        addPageItem.addActionListener(this);
+        saveItem.addActionListener(this);
         printItem.addActionListener(this);
         exitItem.addActionListener(this);
-        addPageItem.addActionListener(this);
 
         fileMenu.add(addPageItem);
+        fileMenu.add(saveItem);
         fileMenu.add(printItem);
+        fileMenu.addSeparator(); // Separador visual
         fileMenu.add(exitItem);
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
@@ -59,60 +63,60 @@ public class TextEditor extends JFrame implements ActionListener {
 
     private JPanel criarPainelCabecalho() {
         JPanel infoPanel = new JPanel(new GridBagLayout());
-        infoPanel.setBorder(BorderFactory.createTitledBorder("Informações"));
+        infoPanel.setBorder(BorderFactory.createTitledBorder("Informações da Ordem de Serviço Ativa"));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        //gbc.fill = GridBagConstraints.HORIZONTAL; // Removido para melhor ajuste dos JTextFields
 
-        gbc.gridx = 0; gbc.gridy = 0;
+        int y = 0;
+        // Linha 0
+        gbc.gridx = 0; gbc.gridy = y; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         infoPanel.add(new JLabel("Cliente:"), gbc);
-        gbc.gridx = 1;
-        gbc.weightx = 1;
-        clienteField = new JTextField();
-        infoPanel.add(clienteField, gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 0.5;
+        clienteField = new JTextField(20); infoPanel.add(clienteField, gbc);
 
-        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.gridx = 2; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         infoPanel.add(new JLabel("Largura Tecido:"), gbc);
-        gbc.gridx = 3; gbc.weightx = 1;
-        larguraTecidoField = new JTextField();
-        infoPanel.add(larguraTecidoField, gbc);
+        gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 0.5;
+        larguraTecidoField = new JTextField(10); infoPanel.add(larguraTecidoField, gbc);
 
-        gbc.gridy = 1; gbc.gridx = 0;
+        // Linha 1
+        y++;
+        gbc.gridx = 0; gbc.gridy = y; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         infoPanel.add(new JLabel("Papel:"), gbc);
-        gbc.gridx = 1; gbc.weightx = 1;
-        papelField = new JTextField();
-        infoPanel.add(papelField, gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 0.5;
+        papelField = new JTextField(20); infoPanel.add(papelField, gbc);
 
-        gbc.gridx = 2; gbc.weightx = 0;
+        gbc.gridx = 2; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         infoPanel.add(new JLabel("Largura Impressão:"), gbc);
-        gbc.gridx = 3; gbc.weightx = 1;
-        larguraImpressaoField = new JTextField();
-        infoPanel.add(larguraImpressaoField, gbc);
-
-        gbc.gridy = 2; gbc.gridx = 0;
+        gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 0.5;
+        larguraImpressaoField = new JTextField(10); infoPanel.add(larguraImpressaoField, gbc);
+        
+        // Linha 2
+        y++;
+        gbc.gridx = 0; gbc.gridy = y; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         infoPanel.add(new JLabel("Tecido:"), gbc);
-        gbc.gridx = 1; gbc.gridwidth = 3;
-        tecidoField = new JTextField();
-        infoPanel.add(tecidoField, gbc);
-        gbc.gridwidth = 1;
+        gbc.gridx = 1; gbc.gridwidth = 3; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 1;
+        tecidoField = new JTextField(); infoPanel.add(tecidoField, gbc);
+        gbc.gridwidth = 1; // Resetar gridwidth
 
-        gbc.gridy = 3; gbc.gridx = 0;
+        // Linha 3
+        y++;
+        gbc.gridx = 0; gbc.gridy = y; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         infoPanel.add(new JLabel("Data:"), gbc);
-        gbc.gridx = 1;
-        dataField = new JTextField();
-        infoPanel.add(dataField, gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 0.5;
+        dataField = new JTextField(10); infoPanel.add(dataField, gbc);
 
-        gbc.gridx = 2;
+        gbc.gridx = 2; gbc.fill = GridBagConstraints.NONE; gbc.weightx = 0;
         infoPanel.add(new JLabel("Hora:"), gbc);
-        gbc.gridx = 3;
-        horaField = new JTextField();
-        infoPanel.add(horaField, gbc);
+        gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.weightx = 0.5;
+        horaField = new JTextField(10); infoPanel.add(horaField, gbc);
 
-        gbc.gridy = 4;
-        gbc.gridx = 0;
-        gbc.gridwidth = 4;
-        JPanel checkboxPanel = new JPanel(new GridLayout(1, 4));
+        // Linha 4 - Checkboxes
+        y++;
+        gbc.gridy = y; gbc.gridx = 0; gbc.gridwidth = 4; gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel checkboxPanel = new JPanel(new FlowLayout(FlowLayout.LEFT)); // Usar FlowLayout
         checkTecCliente = new JCheckBox("Tec Cliente");
         checkTecSublimatec = new JCheckBox("Tec Sublimatec");
         checkSoImpressao = new JCheckBox("Só Impressão");
@@ -126,67 +130,149 @@ public class TextEditor extends JFrame implements ActionListener {
         return infoPanel;
     }
 
-    private void adicionarNovaPagina() {
-        LinhaPanel nova = new LinhaPanel();
-        paginas.add(nova);
-        tabbedPane.addTab("Página " + paginas.size(), nova);
+    private void adicionarNovaAbaOS() {
+        LinhaPanel novaOSPanel = new LinhaPanel(); // Cada aba é um LinhaPanel completo
+        // Envolver o LinhaPanel em um JScrollPane para permitir rolagem se tiver muitos itens
+        JScrollPane scrollPane = new JScrollPane(novaOSPanel,
+                                               JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                                               JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        
+        int numeroDaAba = tabbedPane.getTabCount() + 1;
+        tabbedPane.addTab("OS " + numeroDaAba, scrollPane);
+        tabbedPane.setSelectedComponent(scrollPane); // Seleciona a nova aba
+
+        // Limpar campos do cabeçalho para a nova OS (opcional, mas bom para clareza)
+        limparCamposCabecalho();
+        novaOSPanel.limparCampos(); // Limpa os campos dentro do LinhaPanel também
     }
+
+    private void limparCamposCabecalho() {
+        clienteField.setText("");
+        dataField.setText("");
+        horaField.setText("");
+        papelField.setText("");
+        tecidoField.setText("");
+        larguraTecidoField.setText("");
+        larguraImpressaoField.setText("");
+        checkTecCliente.setSelected(false);
+        checkTecSublimatec.setSelected(false);
+        checkSoImpressao.setSelected(false);
+        checkCalandra.setSelected(false);
+    }
+
+    // Método para pegar a instância do LinhaPanel da aba atualmente selecionada
+    private LinhaPanel getPainelDaAbaAtual() {
+        Component selectedComponent = tabbedPane.getSelectedComponent();
+        if (selectedComponent instanceof JScrollPane) {
+            JScrollPane scrollPane = (JScrollPane) selectedComponent;
+            Component view = scrollPane.getViewport().getView();
+            if (view instanceof LinhaPanel) {
+                return (LinhaPanel) view;
+            }
+        } else if (selectedComponent instanceof LinhaPanel) { // Caso não esteja usando JScrollPane
+             return (LinhaPanel) selectedComponent;
+        }
+        return null; // Se nenhuma aba válida estiver selecionada ou a estrutura for diferente
+    }
+    
+    private OrdemServico construirOSDaAbaAtual() {
+        LinhaPanel painelAtual = getPainelDaAbaAtual();
+        if (painelAtual == null) {
+            JOptionPane.showMessageDialog(this, "Nenhuma aba de Ordem de Serviço selecionada ou válida.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+
+        OrdemServico os = new OrdemServico();
+        // Preencher dados do cabeçalho
+        os.setCliente(clienteField.getText().trim());
+        os.setData(dataField.getText().trim());
+        os.setHora(horaField.getText().trim());
+        os.setPapel(papelField.getText().trim());
+        os.setTecido(tecidoField.getText().trim());
+        os.setLarguraTecido(larguraTecidoField.getText().trim());
+        os.setLarguraImpressao(larguraImpressaoField.getText().trim());
+
+        os.setTecCliente(checkTecCliente.isSelected());
+        os.setTecSublimatec(checkTecSublimatec.isSelected());
+        os.setSoImpressao(checkSoImpressao.isSelected());
+        os.setCalandra(checkCalandra.isSelected());
+
+        // Preencher dados dos itens (do LinhaPanel)
+        os.setRefs(painelAtual.getRefs());
+        os.setMts(painelAtual.getMts()); // Agora deve funcionar
+        os.setPastas(painelAtual.getPastas());
+        os.setImagens(painelAtual.getImagens());
+        
+        return os;
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addPageItem) {
-            adicionarNovaPagina();
+            adicionarNovaAbaOS();
         } else if (e.getSource() == exitItem) {
             System.exit(0);
-        } else if (e.getSource() == printItem) {
-            PrinterJob job = PrinterJob.getPrinterJob();
-
-            boolean[] checks = {
-                checkTecCliente.isSelected(),
-                checkSoImpressao.isSelected(),
-                checkTecSublimatec.isSelected(),
-                checkCalandra.isSelected()
-            };
-
-            List<OrdemServico> ordens = new ArrayList<>();
-            for (LinhaPanel panel : paginas) {
-                OrdemServico ordem = new OrdemServico();
-                ordem.setCliente(clienteField.getText());
-                ordem.setData(dataField.getText());
-                ordem.setHora(horaField.getText());
-                ordem.setPapel(papelField.getText());
-                ordem.setTecido(tecidoField.getText());
-                ordem.setLarguraTecido(larguraTecidoField.getText());
-                ordem.setLarguraImpressao(larguraImpressaoField.getText());
-
-                // checkbox[] -> atributos separados
-                boolean[] checksArray = checks; // seu array boolean vindo da UI
-                if (checksArray.length >= 4) {
-                    ordem.setTecCliente(    checksArray[0] );
-                    ordem.setTecSublimatec( checksArray[1] );
-                    ordem.setSoImpressao(   checksArray[2] );
-                    ordem.setCalandra(      checksArray[3] );
+        } else if (e.getSource() == saveItem) { // Lógica para SALVAR
+            OrdemServico osParaSalvar = construirOSDaAbaAtual();
+            if (osParaSalvar != null) {
+                OrdemServicoDao dao = new OrdemServicoDao();
+                try {
+                    dao.save(osParaSalvar);
+                    JOptionPane.showMessageDialog(this, 
+                        "Ordem de Serviço (ID: " + osParaSalvar.getId() + ") salva com sucesso!", 
+                        "Salvo", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException sqlEx) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Erro de Banco de Dados ao salvar OS:\n" + sqlEx.getMessage(), 
+                        "Erro SQL", 
+                        JOptionPane.ERROR_MESSAGE);
+                    sqlEx.printStackTrace(); // Para debug no console
+                } catch (IOException ioEx) {
+                     JOptionPane.showMessageDialog(this, 
+                        "Erro de I/O (provavelmente imagem) ao salvar OS:\n" + ioEx.getMessage(), 
+                        "Erro de I/O", 
+                        JOptionPane.ERROR_MESSAGE);
+                    ioEx.printStackTrace(); // Para debug no console
                 }
-
-                ordem.setImagens(panel.getImagens());
-                ordem.setRefs(panel.getRefs());
-                ordem.setMts(panel.getMts());
-                ordem.setPastas(panel.getPastas());
-                ordens.add(ordem);
+            }
+        } else if (e.getSource() == printItem) { // Lógica para IMPRIMIR
+            OrdemServico osParaImprimir = construirOSDaAbaAtual();
+            if (osParaImprimir == null) {
+                return; // Mensagem de erro já foi mostrada por construirOSDaAbaAtual()
             }
 
-            job.setPrintable(PrintUtils.createMultiPagePrintable(ordens));
+            PrinterJob job = PrinterJob.getPrinterJob();
+            // O PrintUtils.createMultiPagePrintable espera uma Lista, então colocamos nossa OS única em uma lista
+            List<OrdemServico> listaParaImpressao = new ArrayList<>();
+            listaParaImpressao.add(osParaImprimir);
+            
+            job.setPrintable(PrintUtils.createMultiPagePrintable(listaParaImpressao)); // Assumindo que PrintUtils está ok
+            
             if (job.printDialog()) {
                 try {
                     job.print();
                 } catch (PrinterException ex) {
-                    Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TextEditor.class.getName()).log(Level.SEVERE, "Erro durante a impressão", ex);
+                     JOptionPane.showMessageDialog(this, 
+                        "Erro durante a impressão:\n" + ex.getMessage(), 
+                        "Erro de Impressão", 
+                        JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
 
+    // Main para executar o editor (opcional, se você já tem um Main separado)
     public static void main(String[] args) {
-        new TextEditor();
+         // Definir o Look and Feel do sistema para uma aparência mais nativa (opcional)
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(TextEditor.class.getName()).log(Level.INFO, "Não foi possível definir o Look and Feel do sistema.", ex);
+        }
+        
+        SwingUtilities.invokeLater(() -> new TextEditor());
     }
 }

@@ -1,10 +1,10 @@
 import java.awt.image.BufferedImage;
 
 public class OrdemServico {
-    // === chave primária gerada pelo banco ===
+    //chave primária gerada pelo banco
     private int id;
 
-    // === campos originais da folha ===
+    //campos originais da folha
     private String cliente;
     private String data;
     private String hora;
@@ -13,26 +13,23 @@ public class OrdemServico {
     private String larguraTecido;
     private String larguraImpressao;
 
-    // === check-boxes de tecido ===
+    //check-boxes de tecido
     private boolean tecCliente;
     private boolean tecSublimatec;
     private boolean soImpressao;
     private boolean calandra;
 
-    // === campos de linhas “Pasta” ===
+    //campos de linhas “Pasta”
     private String[] refs;
-    private String[] mts;
+    private String[] mts; 
     private String[] pastas;
-    private String[] mts;
-
-
     // === imagens (em memória, BLOB no futuro) ===
     private BufferedImage[] imagens;
 
-    // === construtor vazio ===
+    // construtor vazio
     public OrdemServico() {}
 
-    // === getters e setters ===
+    //getters e setters
 
     public int getId() {
         return id;
@@ -131,13 +128,6 @@ public class OrdemServico {
     }
     public void setRefs(String[] refs) {
         this.refs = refs;
-    }
-
-    public String[] getMts() {
-        return mts;
-    }
-    public void setMts(String[] mts) {
-        this.mts = mts;
     }
 
     public String[] getPastas() {

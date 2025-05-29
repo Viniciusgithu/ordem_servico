@@ -1,0 +1,7 @@
+{
+    "java.project.sourcePaths": [
+        "TextEditor/test",
+        "TextEditor/src",
+        "TextEditor/bin"
+    ]
+}
