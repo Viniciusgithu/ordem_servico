@@ -65,6 +65,13 @@
 ### 💻 Screencast da Aplicação Funcionando
 - [Demonstração da aplicação em funcionamento](https://www.youtube.com/watch?v=vIvHYwFKUbs)
 
+### 🐛 Bug Tracker
+![Issue1](https://github.com/user-attachments/assets/573382c8-be8a-4e88-8d51-c62e7a220cba)
+![Issue2](https://github.com/user-attachments/assets/a19ae28b-5463-4b9e-bf1f-b15bc18f0f2a)
+![Issue3](https://github.com/user-attachments/assets/5457cd1b-3195-4f27-b4c7-13c1a300f84b)
+![Issue4](https://github.com/user-attachments/assets/e2969a2c-1a3b-4cd3-afea-22769dcadfa4)
+
+
 ---
 
 ## 💡 Melhorias Futuras (Sugestões)
