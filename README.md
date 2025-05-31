@@ -55,7 +55,7 @@
 
 ### 🧬 Diagrama de Classes
 - [[Ver diagrama no diagrams.net]([Preencher o link])] https://drive.google.com/file/d/1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx/view?usp=sharing
-![image](https://github.com/user-attachments/assets/f263bc5d-1e9b-43c6-8b00-746f50d14539)
+![image](https://github.com/user-attachments/assets/d421f4fd-564a-4402-a317-52c381251930)
 
 
 ### 🧪 Screencast dos Testes Unitários
