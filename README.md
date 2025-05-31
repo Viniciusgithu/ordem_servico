@@ -54,7 +54,7 @@
 - [Acessar protótipos no Figma](https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=dwtfHLBP6ZuvZv5J-1)
 
 ### 🧬 Diagrama de Classes
-- [[Ver diagrama no diagrams.net]([Preencher o link])] https://drive.google.com/file/d/1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx/view?usp=sharing
+- [[Ver diagrama no diagrams.net]([Preencher o link])] 
 ![image](https://github.com/user-attachments/assets/d421f4fd-564a-4402-a317-52c381251930)
 
 
