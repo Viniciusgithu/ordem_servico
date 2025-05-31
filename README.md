@@ -45,6 +45,23 @@
 ### 💻 Screencast da Aplicação Funcionando
 - [Demonstração da aplicação em funcionamento](https://youtu.be/EbfuM371guU)
 
+## Quarta Entrega
+
+### 🧾 Histórias do Usuário (Atualizadas)
+- [Visualizar documento](https://docs.google.com/document/d/14WKR6c2ouM5nqEZj5yV3sOeDF--C2tIPXqlO117ok5g/edit?pli=1&tab=t.0#heading=h.ar1ehal5hz80)
+
+### 🎨 Protótipos de Telas (Figma)
+- [Acessar protótipos no Figma](https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=dwtfHLBP6ZuvZv5J-1)
+
+### 🧬 Diagrama de Classes
+- [Ver diagrama no diagrams.net]([Preencher o link])
+
+### 🧪 Screencast dos Testes Unitários
+- [Assistir aos testes unitários](https://youtu.be/zr4MBbZmanQ)
+
+### 💻 Screencast da Aplicação Funcionando
+- [Demonstração da aplicação em funcionamento](https://www.youtube.com/watch?v=vIvHYwFKUbs)
+
 ---
 
 ## 💡 Melhorias Futuras (Sugestões)
