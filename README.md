@@ -54,9 +54,8 @@
 - [Acessar protótipos no Figma](https://www.figma.com/design/sJFzhUsR7P8uujbX4RzHBm/Service_Order?node-id=1-9&t=dwtfHLBP6ZuvZv5J-1)
 
 ### 🧬 Diagrama de Classes
-- [[Ver diagrama no diagrams.net]([Preencher o link])](https://app.diagrams.net/#G1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx#%7B%22pageId%22%3A%22C5RBs43oDa-KdzZeNtuy%22%7D)
-- https://drive.google.com/file/d/1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx/view
-![Captura de tela 2025-05-31 120307](https://github.com/user-attachments/assets/6a98de0b-0b9e-4091-a710-ce6258db1be5)
+- [[Ver diagrama no diagrams.net]([Preencher o link])] https://drive.google.com/file/d/1E-pRuPGggS4K4_pIr3MP0-HpETo3arUx/view?usp=sharing
+![image](https://github.com/user-attachments/assets/f263bc5d-1e9b-43c6-8b00-746f50d14539)
 
 
 ### 🧪 Screencast dos Testes Unitários
