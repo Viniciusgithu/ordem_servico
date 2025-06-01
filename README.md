@@ -40,7 +40,6 @@ Este guia te ajudará a configurar e executar o Sistema de Gerenciamento de Orde
 - IntelliJ IDEA
 - Eclipse
 - Ou linha de comando com javac e java
-- Apertar no botão de play no Eclipse
 
 
 
@@ -97,6 +96,24 @@ ordemdeservico/
 A aplicação será iniciada e a interface gráfica será exibida.
 
 ---
+
+### No Eclipse:
+
+#### 1. Importar o Projeto
+1. Abra o Eclipse
+2. Vá em `File > Open Projects from File System...`
+3. Clique em `Directory...` e selecione a pasta `TextEditor` do seu projeto
+4. Clique em `Finish`
+
+#### 2. Compilar e Executar
+1. No `Package Explorer`, navegue até `src > Main.java`
+2. Clique com o botão direito em `Main.java`
+3. Selecione `Run As > Java Application`
+
+A aplicação será iniciada e a interface gráfica será exibida.
+
+---
+
 
 ## 📱 Usando a Aplicação
 
