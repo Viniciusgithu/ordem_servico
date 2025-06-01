@@ -63,6 +63,8 @@ cd ordem_servico
 ### 2. Estrutura de Pastas
 Organize seu projeto desta forma:
 
+
+```text
 ordemdeservico/
 ├── TextEditor/
 │   ├── bin/
