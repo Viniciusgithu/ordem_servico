@@ -77,8 +77,7 @@ ordemdeservico/
 │       └── TextEditor.java
 │   └── test/
 ├── .gitignore
-└── README.md
-
+└── README.md```
 
 ## 🚀 Executando a Aplicação
 
